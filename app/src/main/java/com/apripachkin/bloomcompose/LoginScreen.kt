@@ -69,7 +69,10 @@ private fun PasswordInput() {
     onValueChange = {
                     text = it
     },
-    visualTransformation = PasswordVisualTransformation() ,
+    keyboardOptions = KeyboardOptions.Default.copy(
+      keyboardType = KeyboardType.Password
+    ),
+    visualTransformation = PasswordVisualTransformation(),
     label = {
       Text(text = "Password (8+ characters)")
     },
