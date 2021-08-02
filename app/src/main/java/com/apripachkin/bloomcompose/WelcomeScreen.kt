@@ -1,4 +1,4 @@
-package com.apripachkin.bloomcompose.ui.theme
+package com.apripachkin.bloomcompose
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Column
@@ -20,23 +20,25 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.apripachkin.bloomcompose.BloomSecondaryButton
 import com.apripachkin.bloomcompose.R.drawable
+import com.apripachkin.bloomcompose.ui.theme.BloomComposeTheme
+import com.apripachkin.bloomcompose.ui.theme.Pink900
+import com.apripachkin.bloomcompose.ui.theme.White
 
 @Composable
-fun WelcomeScreen() {
+fun WelcomeScreen(onLoginSuccess: () -> Unit) {
   Surface(
     color = MaterialTheme.colors.primary,
     modifier = Modifier
       .fillMaxSize()
   ) {
     WelcomeBackground()
-    WelcomeScreenContent()
+    WelcomeScreenContent(onLoginSuccess)
   }
 }
 
 @Composable
-private fun WelcomeScreenContent() {
+private fun WelcomeScreenContent(onLoginSuccess: () -> Unit) {
   Column(
     modifier = Modifier.fillMaxWidth(),
     horizontalAlignment = Alignment.CenterHorizontally
@@ -49,7 +51,7 @@ private fun WelcomeScreenContent() {
     Spacer(modifier = Modifier.height(40.dp))
     CreateAccountButton()
     Spacer(modifier = Modifier.height(8.dp))
-    LoginButton()
+    LoginButton(onLoginSuccess)
   }
 }
 
@@ -80,20 +82,22 @@ private fun AppSubtitle() {
 }
 
 @Composable
-private fun LoginButton() {
+private fun LoginButton(onLoginSuccess: () -> Unit) {
   val textColor = if (MaterialTheme.colors.isLight) {
     Pink900
   } else {
     White
   }
   TextButton(
-    onClick = { /*TODO*/ },
+    onClick = {
+              onLoginSuccess()
+    },
     shape = MaterialTheme.shapes.medium,
     modifier = Modifier
       .fillMaxWidth()
       .padding(horizontal = 16.dp),
 
-  ) {
+    ) {
     Text(text = "Log in", color = textColor)
   }
 }
@@ -117,7 +121,7 @@ private fun WelcomeBackground() {
 @Composable
 private fun PreviewDarkWelcomeScreen() {
   BloomComposeTheme(darkTheme = true) {
-    WelcomeScreen()
+    WelcomeScreen {}
   }
 }
 
@@ -125,6 +129,6 @@ private fun PreviewDarkWelcomeScreen() {
 @Composable
 private fun PreviewLightScreen() {
   BloomComposeTheme(darkTheme = false) {
-    WelcomeScreen()
+    WelcomeScreen {}
   }
 }

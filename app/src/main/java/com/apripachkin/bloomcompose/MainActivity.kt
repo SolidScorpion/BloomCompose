@@ -25,15 +25,25 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.navigation.compose.NavHost
+import androidx.navigation.compose.composable
+import androidx.navigation.compose.rememberNavController
 import com.apripachkin.bloomcompose.ui.theme.BloomComposeTheme
-import com.apripachkin.bloomcompose.ui.theme.WelcomeScreen
 
 class MainActivity : ComponentActivity() {
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
     setContent {
       MyApp {
-        LoginScreen()
+        val navController = rememberNavController()
+        NavHost(navController = navController, startDestination = "welcome") {
+          composable("welcome") {
+            WelcomeScreen {
+              navController.navigate("login")
+            }
+          }
+          composable("login") { LoginScreen() }
+        }
       }
     }
   }
@@ -49,7 +59,7 @@ fun MyApp(content: @Composable () -> Unit) {
 }
 
 @Composable
-fun MyScreenContent(names: List<String> = List(1000) { "Hello $it" } ){
+fun MyScreenContent(names: List<String> = List(1000) { "Hello $it" }) {
   var counterState by remember { mutableStateOf(0) }
   Column(Modifier.fillMaxHeight()) {
     NamesList(names = names, Modifier.weight(1f))
@@ -66,7 +76,10 @@ fun MyScreenContent(names: List<String> = List(1000) { "Hello $it" } ){
 }
 
 @Composable
-fun NamesList(names: List<String>, modifier: Modifier = Modifier) {
+fun NamesList(
+  names: List<String>,
+  modifier: Modifier = Modifier
+) {
   LazyColumn(modifier = modifier) {
     items(items = names) {
       Greeting(name = it)
@@ -108,6 +121,6 @@ fun Greeting(name: String) {
 @Composable
 fun DefaultPreview() {
   MyApp {
-    WelcomeScreen()
+    WelcomeScreen {}
   }
 }
