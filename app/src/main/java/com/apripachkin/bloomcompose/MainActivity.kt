@@ -36,13 +36,21 @@ class MainActivity : ComponentActivity() {
     setContent {
       MyApp {
         val navController = rememberNavController()
-        NavHost(navController = navController, startDestination = "welcome") {
+        NavHost(navController = navController, startDestination = "home") {
           composable("welcome") {
             WelcomeScreen {
               navController.navigate("login")
             }
           }
-          composable("login") { LoginScreen() }
+          composable("login") {
+            LoginScreen {
+              navController.navigate("home")
+            }
+          }
+
+          composable("home") {
+            HomeScreen()
+          }
         }
       }
     }

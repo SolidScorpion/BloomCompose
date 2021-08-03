@@ -14,10 +14,11 @@ import androidx.compose.ui.unit.dp
 @Composable
 fun BloomSecondaryButton(
   buttonText: String,
-  modifier: Modifier = Modifier
+  modifier: Modifier = Modifier,
+  onclick: (() -> Unit)? = null
 ) {
   Button(
-    onClick = { /*TODO*/ },
+    onClick = { onclick?.invoke() },
     modifier = Modifier
       .fillMaxWidth()
       .height(48.dp)

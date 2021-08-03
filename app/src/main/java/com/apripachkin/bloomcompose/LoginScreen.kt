@@ -27,7 +27,7 @@ import androidx.compose.ui.unit.dp
 import com.apripachkin.bloomcompose.ui.theme.BloomComposeTheme
 
 @Composable
-fun LoginScreen() {
+fun LoginScreen(accountCreated: () -> Unit) {
   Surface(
     color = MaterialTheme.colors.background,
     modifier = Modifier.fillMaxSize()
@@ -49,14 +49,14 @@ fun LoginScreen() {
         textAlign = TextAlign.Center
       )
       Spacer(modifier = Modifier.height(16.dp))
-      LoginButton()
+      LoginButton(accountCreated)
     }
   }
 }
 
 @Composable
-private fun LoginButton() {
-  BloomSecondaryButton(buttonText = "Login")
+private fun LoginButton(accountCreated: () -> Unit) {
+  BloomSecondaryButton(buttonText = "Login", onclick = accountCreated)
 }
 
 @Composable
@@ -113,7 +113,7 @@ private fun LoginHeader() {
 @Composable
 private fun PreviewDarkLogin() {
   BloomComposeTheme(darkTheme = true) {
-    LoginScreen()
+    LoginScreen {}
   }
 }
 
@@ -121,6 +121,6 @@ private fun PreviewDarkLogin() {
 @Composable
 private fun PreviewLightLogin() {
   BloomComposeTheme(darkTheme = false) {
-    LoginScreen()
+    LoginScreen {}
   }
 }
