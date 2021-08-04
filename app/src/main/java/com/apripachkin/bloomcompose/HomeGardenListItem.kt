@@ -49,7 +49,9 @@ fun HomeGardenListItem(data: Data) {
 
 @Composable
 private fun TitleAndDescriptionCheckboxRow(data: Data) {
-  Row {
+  Row(
+    verticalAlignment = Alignment.CenterVertically
+  ) {
     TitleAndDescription(data)
     PlantCheckbox()
   }
@@ -67,17 +69,19 @@ private fun PlantCheckbox() {
       checkState = it
     },
     colors = CheckboxDefaults.colors(
-      checkedColor = MaterialTheme.colors.background
-    )
+      checkmarkColor = MaterialTheme.colors.background
+    ),
+    modifier = Modifier
+      .size(24.dp)
   )
 }
 
 @Composable
 private fun RowScope.TitleAndDescription(data: Data) {
-  Column (
+  Column(
     modifier = Modifier
       .weight(1F)
-    ){
+  ) {
     Text(
       text = data.name,
       style = MaterialTheme.typography.h2,

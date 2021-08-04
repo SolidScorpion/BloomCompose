@@ -13,6 +13,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.paddingFromBaseline
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.Icon
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.OutlinedTextField
@@ -26,6 +27,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.apripachkin.bloomcompose.data.homeGardenThemes
 import com.apripachkin.bloomcompose.data.sampleData
 import com.apripachkin.bloomcompose.ui.theme.BloomComposeTheme
 
@@ -55,7 +57,10 @@ private fun HomeGardenSection() {
       text = "Design your home garden",
       style = MaterialTheme.typography.h1,
       modifier = Modifier
-        .paddingFromBaseline(top = 40.dp, bottom = 16.dp)
+        .paddingFromBaseline(
+          top = 40.dp,
+          bottom = 16.dp
+        )
         .weight(1f)
     )
     Icon(
@@ -65,6 +70,17 @@ private fun HomeGardenSection() {
         .size(24.dp)
         .alignByBaseline()
     )
+  }
+  Column(
+    verticalArrangement = Arrangement.spacedBy(8.dp),
+    modifier = Modifier
+      .padding(horizontal = 16.dp)
+      .padding(bottom = 16.dp)
+      .verticalScroll(rememberScrollState())
+  ) {
+    homeGardenThemes.forEach { 
+      HomeGardenListItem(data = it)
+    }
   }
 }
 
