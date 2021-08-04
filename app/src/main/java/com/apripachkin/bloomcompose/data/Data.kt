@@ -8,11 +8,14 @@ val sampleData = listOf(
   Data("Tiny terrariums", R.drawable.tiny_terrariums),
   Data("Jungle vibes", R.drawable.jungle_vibes),
   Data("Easy care", R.drawable.easy_care),
-  Data("Statements", R.drawable.statements),
+  Data("Statements", R.drawable.statements)
+)
+
+val homeGardenThemes = listOf(
   Data("Monstera", R.drawable.monstera),
   Data("Aglaonema", R.drawable.aglaonema),
   Data("Peace lily", R.drawable.peace_lily),
-  Data("Fiddle leaf", R.drawable.fiddle_leaf),
+  Data("Fiddle leaf tree", R.drawable.fiddle_leaf),
   Data("Snake plant", R.drawable.snake_plant),
   Data("Pothos", R.drawable.pothos)
 )

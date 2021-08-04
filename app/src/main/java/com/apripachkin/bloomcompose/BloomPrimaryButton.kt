@@ -14,7 +14,6 @@ import androidx.compose.ui.unit.dp
 @Composable
 fun BloomSecondaryButton(
   buttonText: String,
-  modifier: Modifier = Modifier,
   onclick: (() -> Unit)? = null
 ) {
   Button(
@@ -29,6 +28,6 @@ fun BloomSecondaryButton(
     )
 
   ) {
-    Text(text = "Create account")
+    Text(text = buttonText)
   }
 }
