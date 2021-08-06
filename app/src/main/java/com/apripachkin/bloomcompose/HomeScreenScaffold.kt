@@ -32,23 +32,34 @@ import androidx.compose.material.icons.filled.Home
 import androidx.compose.material.icons.filled.Search
 import androidx.compose.material.icons.filled.ShoppingCart
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.apripachkin.bloomcompose.data.Data
+import com.apripachkin.bloomcompose.data.HomeViewState
 import com.apripachkin.bloomcompose.data.homeGardenThemes
 import com.apripachkin.bloomcompose.data.sampleData
 import com.apripachkin.bloomcompose.ui.theme.BloomComposeTheme
 
 @Composable
-fun HomeScreen() {
+fun HomeScreen(homeViewModel: HomeViewModel) {
+  val collectAsState = homeViewModel.viewState.collectAsState()
+  HomeScreenScaffold(state = collectAsState.value)
+}
+
+@Composable
+fun HomeScreenScaffold(
+  state: HomeViewState,
+) {
   Scaffold(
     bottomBar = {
       BloomBottomBar()
     }
   ) {
-    HomeScreenContent(it)
+    HomeScreenContent(it, state)
   }
 }
 
@@ -99,7 +110,10 @@ private fun RowScope.BloomBottomButton(
 }
 
 @Composable
-private fun HomeScreenContent(paddingValues: PaddingValues) {
+private fun HomeScreenContent(
+  paddingValues: PaddingValues,
+  state: HomeViewState
+) {
   Surface(
     color = MaterialTheme.colors.background,
     modifier = Modifier
@@ -113,14 +127,18 @@ private fun HomeScreenContent(paddingValues: PaddingValues) {
     ) {
       Spacer(modifier = Modifier.height(40.dp))
       SearchInput()
-      BrowseThemesSection()
-      HomeGardenSection()
+      BrowseThemesSection(
+        state.plantThemes
+      )
+      HomeGardenSection(
+        state.homeGardenItems
+      )
     }
   }
 }
 
 @Composable
-private fun HomeGardenSection() {
+private fun HomeGardenSection(homeGardenItems: List<Data>) {
   Row(
     verticalAlignment = Alignment.CenterVertically,
     modifier = Modifier
@@ -141,7 +159,6 @@ private fun HomeGardenSection() {
       contentDescription = "Filter",
       modifier = Modifier
         .size(24.dp)
-        .alignByBaseline()
     )
   }
   Column(
@@ -150,20 +167,20 @@ private fun HomeGardenSection() {
       .padding(horizontal = 16.dp)
       .padding(bottom = 16.dp)
   ) {
-    homeGardenThemes.forEach { 
+    homeGardenItems.forEach {
       HomeGardenListItem(data = it)
     }
   }
 }
 
 @Composable
-private fun BrowseThemesSection() {
+private fun BrowseThemesSection(plantThemes: List<Data>) {
   Text(
     text = "Browse themes",
     style = MaterialTheme.typography.h1,
     modifier = Modifier
       .paddingFromBaseline(32.dp)
-      .padding(16.dp)
+      .padding(horizontal = 16.dp)
   )
   Spacer(modifier = Modifier.height(16.dp))
   Row(
@@ -172,7 +189,7 @@ private fun BrowseThemesSection() {
       .horizontalScroll(rememberScrollState())
       .padding(horizontal = 16.dp)
   ) {
-    sampleData.forEach { PlantThemeCard(data = it) }
+    plantThemes.forEach { PlantThemeCard(data = it) }
   }
 }
 
@@ -203,6 +220,11 @@ private fun SearchInput() {
 @Composable
 fun PreviewDarkHome() {
   BloomComposeTheme {
-    HomeScreen()
+    HomeScreenScaffold(
+      HomeViewState(
+        sampleData.slice(0..2),
+        homeGardenThemes.slice(0..2)
+      )
+    )
   }
 }

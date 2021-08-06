@@ -28,6 +28,7 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import com.apripachkin.bloomcompose.data.HomeViewState
 import com.apripachkin.bloomcompose.ui.theme.BloomComposeTheme
 private const val WELCOME = "welcome"
 private const val LOGIN = "login"
@@ -51,7 +52,7 @@ class MainActivity : ComponentActivity() {
           }
 
           composable(HOME) {
-            HomeScreen()
+            HomeScreenScaffold(HomeViewState())
           }
         }
       }
