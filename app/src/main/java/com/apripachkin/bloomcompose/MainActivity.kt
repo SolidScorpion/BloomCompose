@@ -29,26 +29,28 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.apripachkin.bloomcompose.ui.theme.BloomComposeTheme
-
+private const val WELCOME = "welcome"
+private const val LOGIN = "login"
+private const val HOME = "home"
 class MainActivity : ComponentActivity() {
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
     setContent {
       MyApp {
         val navController = rememberNavController()
-        NavHost(navController = navController, startDestination = "home") {
-          composable("welcome") {
+        NavHost(navController = navController, startDestination = WELCOME) {
+          composable(WELCOME) {
             WelcomeScreen {
-              navController.navigate("login")
+              navController.navigate(LOGIN)
             }
           }
-          composable("login") {
+          composable(LOGIN) {
             LoginScreen {
-              navController.navigate("home")
+              navController.navigate(HOME)
             }
           }
 
-          composable("home") {
+          composable(HOME) {
             HomeScreen()
           }
         }

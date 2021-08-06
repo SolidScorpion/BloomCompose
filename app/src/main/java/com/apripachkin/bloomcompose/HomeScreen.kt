@@ -4,6 +4,7 @@ import android.content.res.Configuration
 import androidx.compose.foundation.horizontalScroll
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.RowScope
 import androidx.compose.foundation.layout.Spacer
@@ -47,7 +48,7 @@ fun HomeScreen() {
       BloomBottomBar()
     }
   ) {
-    HomeScreenContent()
+    HomeScreenContent(it)
   }
 }
 
@@ -98,12 +99,18 @@ private fun RowScope.BloomBottomButton(
 }
 
 @Composable
-private fun HomeScreenContent() {
+private fun HomeScreenContent(paddingValues: PaddingValues) {
   Surface(
     color = MaterialTheme.colors.background,
-    modifier = Modifier.fillMaxSize()
+    modifier = Modifier
+      .fillMaxSize()
   ) {
-    Column {
+    Column(
+      modifier = Modifier
+        .fillMaxWidth()
+        .verticalScroll(rememberScrollState())
+        .padding(paddingValues)
+    ) {
       Spacer(modifier = Modifier.height(40.dp))
       SearchInput()
       BrowseThemesSection()
@@ -142,7 +149,6 @@ private fun HomeGardenSection() {
     modifier = Modifier
       .padding(horizontal = 16.dp)
       .padding(bottom = 16.dp)
-      .verticalScroll(rememberScrollState())
   ) {
     homeGardenThemes.forEach { 
       HomeGardenListItem(data = it)
